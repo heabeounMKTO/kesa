@@ -79,7 +79,7 @@ fn main() {
         "Kesa Running: {:?}",
         &task.bright_white().on_bright_purple()
     );
-    
+    println!("Conversion Portions {:?}", portions); 
 
     // do ya thing kessy
     match task {

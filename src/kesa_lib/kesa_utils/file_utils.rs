@@ -213,27 +213,31 @@ pub fn move_labels_to_export_folder(
         &input_folder, &output_folder
     );
 
-    let mut all_txt = get_all_txt(&input_folder);
+    let all_txt = get_all_txt(&input_folder);
 
-    let train_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.train).floor()
+    let train_ratio = {
+        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.train).ceil() as i64
     };
     
-    let valid_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.valid).floor()
+    let valid_ratio = {
+        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.valid).ceil() as i64
     };
     
-    let test_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.test).floor()
+    let test_ratio = {
+        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.test).floor() as i64
     };
     
-    dbg!(all_txt.as_ref().unwrap().len() as f32,train_ratio, valid_ratio, test_ratio); 
-    let train_batch = all_txt.split_off(train_ratio as i64);
-    let valid_batch = all_txt.split_off(valid_ratio as i64);
-    let test_batch = all_txt.split_off(valid_ratio as i64);
-    dbg!(train_batch, valid_batch, test_batch);    
-    for txtfiles in all_txt.unwrap() {
-        let stem = txtfiles.as_path().file_stem().unwrap();
-        
-    }
+    dbg!(&train_ratio, &valid_ratio, &test_ratio);
+
+
+    // do the actual separation to files
+    let train_batch = &all_txt.as_ref().unwrap()[0..(train_ratio.try_into().unwrap())];
+    let valid_batch = &all_txt.as_ref().unwrap()[0..(valid_ratio.try_into().unwrap())]; 
+    let test_batch = &all_txt.as_ref().unwrap()[0..(test_ratio.try_into().unwrap())]; 
+    dbg!(train_batch, valid_batch,test_batch); 
+    // for train_files in train_batch {
+    //     dbg!(train_files);
+    // }
+ 
 }
+
