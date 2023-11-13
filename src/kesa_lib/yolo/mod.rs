@@ -1,1 +1,1 @@
-pub mod yolo;
+pub mod yolo_rs;
