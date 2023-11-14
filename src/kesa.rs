@@ -63,7 +63,6 @@ fn main() {
     kesa_splash::print_splash();
     let penis = CliArguments::parse();
 
-
     let task: KesaTaskType = KesaTaskType::from_str(&penis.task).unwrap();
     println!(
         "Kesa Running: {:?}",
@@ -105,7 +104,11 @@ fn main() {
             let model_name = &penis.model_name.unwrap();
             let model_config = &penis.model_config.unwrap(); //this a string
             let processor = &penis.processor;
-            let label_setting = KesaLabel::new_label_setting(model_name.to_string(), model_config.to_string(), processor.clone());
+            let label_setting = KesaLabel::new_label_setting(
+                model_name.to_string(),
+                model_config.to_string(),
+                processor.clone(),
+            );
         }
         KesaTaskType::KesaAugment => {
             todo!()

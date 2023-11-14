@@ -48,11 +48,7 @@ impl KesaLabel {
         model_config: String,
         processor: Option<String>,
     ) -> Result<LabelSettings, anyhow::Error> {
-        LabelSettings::new(
-            model_name, 
-            model_config,
-            processor
-        )
+        LabelSettings::new(model_name, model_config, processor)
     }
 }
 

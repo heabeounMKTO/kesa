@@ -17,13 +17,11 @@ pub struct LabelSettings {
     pub processor: Option<String>,
 }
 
-
 pub fn read_model_config(input: &str) -> Result<ModelConfig> {
     let f = std::fs::File::open(input)?;
     let model_config: ModelConfig = serde_yaml::from_reader(f)?;
     Ok(model_config)
 }
-
 
 impl LabelSettings {
     pub fn new(
