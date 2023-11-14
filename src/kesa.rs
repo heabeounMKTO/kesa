@@ -105,17 +105,18 @@ fn main() {
             let model_name = &penis.model_name.unwrap();
             let model_config = &penis.model_config.unwrap(); //this a string
             let processor = &penis.processor;
-        
+
             // read config and load model
             let torch_model = KesaLabel::new_label_setting(
                 model_name.to_string(),
                 model_config.to_string(),
                 processor.clone(),
-            ).unwrap().load_model();
-            
-           let ayylmao = get_all_images_from_folder(&penis.folder);
-           println!("ayylmao {:?}", &ayylmao); 
+            )
+            .unwrap()
+            .load_model();
 
+            let ayylmao = get_all_images_from_folder(&penis.folder);
+            println!("ayylmao {:?}", &ayylmao);
         }
         KesaTaskType::KesaAugment => {
             todo!()

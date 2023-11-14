@@ -64,19 +64,21 @@ impl LabelExportFolderDetails {
     }
 }
 
-pub fn get_all_images_from_folder(input_folder: &str) -> anyhow::Result<Vec<PathBuf>, anyhow::Error> {
+pub fn get_all_images_from_folder(
+    input_folder: &str,
+) -> anyhow::Result<Vec<PathBuf>, anyhow::Error> {
     let folder_path = Path::new(input_folder);
     let images: Vec<PathBuf> = folder_path
-                               .read_dir()?
-                               .filter_map(|f| f.ok())
-                               .filter(|f| match f.path().extension() {
-                                None => false,
-                                Some(ex) => ex == "jpg" || ex == "jpeg" || ex == "png"
-                               }).map(|f| f.path())
-                               .collect();
+        .read_dir()?
+        .filter_map(|f| f.ok())
+        .filter(|f| match f.path().extension() {
+            None => false,
+            Some(ex) => ex == "jpg" || ex == "jpeg" || ex == "png",
+        })
+        .map(|f| f.path())
+        .collect();
     Ok(images)
 }
-
 
 pub fn create_export_folder(
     export_path: Option<String>,
@@ -145,7 +147,6 @@ pub fn get_model_classes_from_yaml(input: &str) -> anyhow::Result<HashMap<String
     let model_deets: ModelConfig = serde_yaml::from_reader(f)?;
     Ok(class_vec2hash(model_deets.names).unwrap())
 }
-
 
 pub fn get_model_config_from_yaml(input: &str) -> anyhow::Result<ModelConfig> {
     let f = std::fs::File::open(input)?;

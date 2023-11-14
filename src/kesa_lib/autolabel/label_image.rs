@@ -1,11 +1,8 @@
-use crate::{kesa_utils::file_utils, convert_label::convert::ConvertSettings, yolo::yolo_rs};
+use crate::kesa_utils::file_utils::{get_model_config_from_yaml, ModelConfig};
+use crate::{convert_label::convert::ConvertSettings, kesa_utils::file_utils, yolo::yolo_rs};
 use anyhow::{Error, Result};
 use serde_derive::{Deserialize, Serialize};
 use std::{os::unix::process, path::PathBuf};
-use crate::kesa_utils::file_utils::{ModelConfig,get_model_config_from_yaml};
-
-
-
 
 pub struct LabelSettings {
     pub model_name: String,
