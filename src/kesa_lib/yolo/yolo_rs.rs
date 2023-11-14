@@ -136,7 +136,7 @@ impl YOLO {
             .forward_ts(&[img])
             .unwrap()
             .to_device(self.device);
-        println!("Inference Time: {:?}", start.elapsed());
+        // println!("Inference Time: {:?}", start.elapsed());
         let _result = self.non_max_suppression(&pred.get(0), 0.1, 0.1);
     }
 

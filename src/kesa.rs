@@ -27,14 +27,15 @@ struct CliArguments {
     #[arg(long)]
     export_folder: Option<String>,
 
+    // change this to sub command
     #[arg(long)]
     model_name: Option<String>,
 
     #[arg(long)]
     model_config: Option<String>,
 
-    #[arg(long)]
-    processor: Option<String>,
+    #[arg(long,required=false)]
+    http: bool,
 
     #[command(subcommand)]
     label_portions: Option<LabelPortionsOption>,
@@ -44,6 +45,12 @@ struct CliArguments {
 
     #[arg(long)]
     classes_file: Option<String>,
+}
+
+
+#[derive(Debug, Subcommand)]
+enum AutoLabelConfig {
+
 }
 
 #[derive(Debug, Subcommand)]
@@ -102,21 +109,29 @@ fn main() {
             );
         }
         KesaTaskType::KesaLabel => {
-            let model_name = &penis.model_name.unwrap();
-            let model_config = &penis.model_config.unwrap(); //this a string
-            let processor = &penis.processor;
+            if penis.http == false {
+                let model_name = &penis.model_name.unwrap();
+                let model_config = &penis.model_config.unwrap(); //this a string
+                let processor = match &penis.processor {
+                    true => "http",
+                    false => "local" 
+                };
 
-            // read config and load model
-            let torch_model = KesaLabel::new_label_setting(
-                model_name.to_string(),
-                model_config.to_string(),
-                processor.clone(),
-            )
-            .unwrap()
-            .load_model();
+                // read config and load model
+                let torch_model = KesaLabel::new_label_setting(
+                    model_name.to_string(),
+                    model_config.to_string(),
+                    processor.to_owned(),
+                )
+                .unwrap()
+                .load_model();
 
-            let ayylmao = get_all_images_from_folder(&penis.folder);
-            println!("ayylmao {:?}", &ayylmao);
+                let ayylmao = get_all_images_from_folder(&penis.folder).unwrap();
+                println!("ayylmao {:?}", &ayylmao);
+            } else {
+                // label with a detectserver instance
+                todo!()
+            }
         }
         KesaTaskType::KesaAugment => {
             todo!()

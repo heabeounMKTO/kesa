@@ -7,22 +7,19 @@ use std::{os::unix::process, path::PathBuf};
 pub struct LabelSettings {
     pub model_name: String,
     pub model_config: ModelConfig,
-    pub processor: Option<String>,
+    pub processor: String,
 }
 
 impl LabelSettings {
     pub fn new(
         model_name: String,
         model_config: String,
-        processor: Option<String>,
+        processor: String,
     ) -> Result<LabelSettings, Error> {
         Ok(LabelSettings {
             model_name: model_name,
             model_config: get_model_config_from_yaml(&model_config)?,
-            processor: match processor {
-                Some(ref String) => processor,
-                None => Some(String::from("local")),
-            },
+            processor: processor 
         })
     }
 

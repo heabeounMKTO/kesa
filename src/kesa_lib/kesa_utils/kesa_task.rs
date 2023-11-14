@@ -45,7 +45,7 @@ impl KesaLabel {
     pub fn new_label_setting(
         model_name: String,
         model_config: String,
-        processor: Option<String>,
+        processor: String
     ) -> Result<LabelSettings, anyhow::Error> {
         LabelSettings::new(model_name, model_config, processor)
     }
