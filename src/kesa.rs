@@ -104,11 +104,14 @@ fn main() {
             let model_name = &penis.model_name.unwrap();
             let model_config = &penis.model_config.unwrap(); //this a string
             let processor = &penis.processor;
-            let label_setting = KesaLabel::new_label_setting(
+        
+            // read config and load model
+            let torch_model = KesaLabel::new_label_setting(
                 model_name.to_string(),
                 model_config.to_string(),
                 processor.clone(),
-            );
+            ).unwrap().load_model();
+        
         }
         KesaTaskType::KesaAugment => {
             todo!()
