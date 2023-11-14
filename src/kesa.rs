@@ -1,4 +1,5 @@
 use clap::Subcommand;
+use kesa_lib::kesa_utils::file_utils::get_all_images_from_folder;
 use kesa_lib::kesa_utils::file_utils::get_model_classes_from_yaml;
 use kesa_lib::kesa_utils::file_utils::LabelPortions;
 use kesa_lib::*;
@@ -112,7 +113,8 @@ fn main() {
                 processor.clone(),
             ).unwrap().load_model();
             
-            
+           let ayylmao = get_all_images_from_folder(&penis.folder);
+           println!("ayylmao {:?}", &ayylmao); 
 
         }
         KesaTaskType::KesaAugment => {

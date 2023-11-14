@@ -1,6 +1,5 @@
 use crate::convert_label::label_structs::{GenericAnnotation, GenericLabelPoints, LabelMeLabel};
 use anyhow;
-
 use owo_colors::colors::xterm::FuchsiaPink;
 use serde_derive::{Deserialize, Serialize};
 use serde_json::Result;
@@ -64,6 +63,20 @@ impl LabelExportFolderDetails {
         ayylmao
     }
 }
+
+pub fn get_all_images_from_folder(input_folder: &str) -> anyhow::Result<Vec<PathBuf>, anyhow::Error> {
+    let folder_path = Path::new(input_folder);
+    let images: Vec<PathBuf> = folder_path
+                               .read_dir()?
+                               .filter_map(|f| f.ok())
+                               .filter(|f| match f.path().extension() {
+                                None => false,
+                                Some(ex) => ex == "jpg" || ex == "jpeg" || ex == "png"
+                               }).map(|f| f.path())
+                               .collect();
+    Ok(images)
+}
+
 
 pub fn create_export_folder(
     export_path: Option<String>,
