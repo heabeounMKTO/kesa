@@ -27,15 +27,8 @@ struct CliArguments {
     #[arg(long)]
     export_folder: Option<String>,
 
-    // change this to sub command
-    #[arg(long)]
-    model_name: Option<String>,
-
-    #[arg(long)]
-    model_config: Option<String>,
-
-    #[arg(long,required=false)]
-    http: bool,
+    #[arg(command(subcommand))]
+    auto_label_options: Option<AutoLabelConfig>,
 
     #[command(subcommand)]
     label_portions: Option<LabelPortionsOption>,
@@ -50,7 +43,16 @@ struct CliArguments {
 
 #[derive(Debug, Subcommand)]
 enum AutoLabelConfig {
+    ModelOptions {
+        #[arg(long)]
+        model_name: Option<String>,
+        
+        #[arg(long)]
+        model_config: Option<String>,
 
+        #[arg(long,required=false)]
+        http: bool,
+    }
 }
 
 #[derive(Debug, Subcommand)]
