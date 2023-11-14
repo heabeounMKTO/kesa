@@ -1,5 +1,6 @@
 use crate::convert_label::convert::{ConvertSettings, ConvertTarget};
 
+use crate::autolabel::label_image::{LabelSettings, ModelConfig};
 use std::collections::HashMap;
 use std::str::FromStr;
 
@@ -38,6 +39,21 @@ impl KesaConvert {
 #[derive(Debug, Clone)]
 pub struct KesaLabel {
     settings: String,
+}
+
+impl KesaLabel {
+    // this might the dumbest thing ever
+    pub fn new_label_setting(
+        model_name: String,
+        model_config: String,
+        processor: Option<String>,
+    ) -> Result<LabelSettings, anyhow::Error> {
+        LabelSettings::new(
+            model_name, 
+            model_config,
+            processor
+        )
+    }
 }
 
 // TODO:

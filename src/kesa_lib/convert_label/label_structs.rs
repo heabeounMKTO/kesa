@@ -1,5 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
-use serde_json::{Value, json};
+use serde_json::{json, Value};
 use std::collections::HashMap;
 
 /// stores generic values that most annotated images have

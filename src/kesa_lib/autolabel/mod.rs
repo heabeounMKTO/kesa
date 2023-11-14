@@ -1,1 +1,1 @@
-mod label_image;
+pub mod label_image;

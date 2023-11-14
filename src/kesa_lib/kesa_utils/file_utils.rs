@@ -30,19 +30,18 @@ pub struct LabelExportFolderDetails {
 pub struct LabelPortions {
     pub train: f32,
     pub valid: f32,
-    pub test: f32
+    pub test: f32,
 }
 
 impl LabelPortions {
-    pub fn new(train_set: f32, valid_set: f32, test_set: f32) -> LabelPortions{
+    pub fn new(train_set: f32, valid_set: f32, test_set: f32) -> LabelPortions {
         LabelPortions {
             train: train_set,
             valid: valid_set,
-            test: test_set
-        } 
+            test: test_set,
+        }
     }
 }
-
 
 impl LabelExportFolderDetails {
     pub fn get_train_image_and_label_path(&self) -> Vec<String> {
@@ -204,7 +203,7 @@ pub fn read_shapes_from_json(input_json: &str) -> anyhow::Result<Vec<GenericAnno
 pub fn move_labels_to_export_folder(
     input_folder: &str,
     output_folder: &str,
-    export_portions: LabelPortions
+    export_portions: LabelPortions,
 ) {
     // will add handling of files according to convert format later,
     // currently it's just for YOLO format
@@ -215,25 +214,26 @@ pub fn move_labels_to_export_folder(
 
     let mut all_txt = get_all_txt(&input_folder);
 
-    let train_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.train).floor()
-    };
-    
-    let valid_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.valid).floor()
-    };
-    
-    let test_ratio:f32 = {
-        ((all_txt.as_ref().unwrap().len() as f32)*&export_portions.test).floor()
-    };
-    
-    dbg!(all_txt.as_ref().unwrap().len() as f32,train_ratio, valid_ratio, test_ratio); 
-    let train_batch = all_txt.split_off(train_ratio as i64);
-    let valid_batch = all_txt.split_off(valid_ratio as i64);
-    let test_batch = all_txt.split_off(valid_ratio as i64);
-    dbg!(train_batch, valid_batch, test_batch);    
-    for txtfiles in all_txt.unwrap() {
-        let stem = txtfiles.as_path().file_stem().unwrap();
-        
-    }
+    let train_ratio: f32 =
+        { ((all_txt.as_ref().unwrap().len() as f32) * &export_portions.train).floor() };
+
+    let valid_ratio: f32 =
+        { ((all_txt.as_ref().unwrap().len() as f32) * &export_portions.valid).floor() };
+
+    let test_ratio: f32 =
+        { ((all_txt.as_ref().unwrap().len() as f32) * &export_portions.test).floor() };
+
+    dbg!(
+        all_txt.as_ref().unwrap().len() as f32,
+        train_ratio,
+        valid_ratio,
+        test_ratio
+    );
+    // let train_batch = all_txt.unwrap().split_off(train_ratio as i64);
+    // let valid_batch = all_txt.unwrap().split_off(valid_ratio as i64);
+    // let test_batch = all_txt.unwrap().split_off(valid_ratio as i64);
+    // dbg!(train_batch, valid_batch, test_batch);
+    // for txtfiles in all_txt.unwrap() {
+    //     let stem = txtfiles.as_path().file_stem().unwrap();
+    // }
 }
