@@ -1,2 +1,2 @@
 use super::autolabel_struct::LabelSettings;
-use crate::yolo::yolo;
+use crate::yolo::yolo_rs;
