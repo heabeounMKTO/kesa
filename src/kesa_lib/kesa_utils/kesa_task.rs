@@ -1,9 +1,8 @@
 use crate::convert_label::convert::{ConvertSettings, ConvertTarget};
-
-use crate::autolabel::label_image::{LabelSettings, ModelConfig};
+use crate::autolabel::label_image::{LabelSettings};
+use crate::kesa_utils::file_utils::ModelConfig;
 use std::collections::HashMap;
 use std::str::FromStr;
-
 use super::kesa_error::KesaError;
 
 #[derive(Debug, Clone)]

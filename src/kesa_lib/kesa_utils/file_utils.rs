@@ -13,9 +13,10 @@ use std::path::Path;
 use std::{ffi::OsStr, fs, path::PathBuf};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ModelDetails {
+pub struct ModelConfig {
     pub names: Vec<String>,
-    pub input_size: Vec<String>, // TODO: add input_size to python export scripts
+    pub input_size_h: i64,
+    pub input_size_w: i64,
 }
 
 #[derive(Debug)]
@@ -128,12 +129,14 @@ pub fn class_vec2hash(input_vec: Vec<String>) -> Result<HashMap<String, i32>> {
 }
 pub fn get_model_classes_from_yaml(input: &str) -> anyhow::Result<HashMap<String, i32>> {
     let f = std::fs::File::open(input)?;
-    let model_deets: ModelDetails = serde_yaml::from_reader(f)?;
+    let model_deets: ModelConfig = serde_yaml::from_reader(f)?;
     Ok(class_vec2hash(model_deets.names).unwrap())
 }
-pub fn get_model_config_from_yaml(input: &str) -> anyhow::Result<ModelDetails> {
+
+
+pub fn get_model_config_from_yaml(input: &str) -> anyhow::Result<ModelConfig> {
     let f = std::fs::File::open(input)?;
-    let model_config: ModelDetails = serde_yaml::from_reader(f)?;
+    let model_config: ModelConfig = serde_yaml::from_reader(f)?;
     Ok(model_config)
 }
 pub fn get_all_json(input: &str) -> anyhow::Result<Vec<PathBuf>> {
